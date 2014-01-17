@@ -1,27 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 	<url>
-		<loc>http://www.languageoflanguages.comindex.html</loc>
+		<loc>http://www.languageoflanguages.com/index.html</loc>
 	</url>
 	<url>
-		<loc>http://www.languageoflanguages.comnews/index.html</loc>
+		<loc>http://www.languageoflanguages.com/workbench/lolsworkbench.html</loc>
 	</url>
 	<url>
-		<loc>http://www.languageoflanguages.comnews/files/0c4e139d6e01124d31484016a6665fb3-4.html</loc>
+		<loc>http://www.languageoflanguages.com/news/index.html</loc>
 	</url>
 	<url>
-		<loc>http://www.languageoflanguages.comnews/files/f88ba664c0b0a789bb883a4f35a7d476-3.html</loc>
+		<loc>http://www.languageoflanguages.com/news/files/0c4e139d6e01124d31484016a6665fb3-4.html</loc>
 	</url>
 	<url>
-		<loc>http://www.languageoflanguages.comnews/files/341725b8aa74275b594a45f6a85243f0-2.html</loc>
+		<loc>http://www.languageoflanguages.com/news/files/f88ba664c0b0a789bb883a4f35a7d476-3.html</loc>
 	</url>
 	<url>
-		<loc>http://www.languageoflanguages.comdownloads/index.html</loc>
+		<loc>http://www.languageoflanguages.com/news/files/341725b8aa74275b594a45f6a85243f0-2.html</loc>
 	</url>
 	<url>
-		<loc>http://www.languageoflanguages.compeople/index.html</loc>
+		<loc>http://www.languageoflanguages.com/downloads/index.html</loc>
 	</url>
 	<url>
-		<loc>http://www.languageoflanguages.compublications/index.html</loc>
+		<loc>http://www.languageoflanguages.com/people/index.html</loc>
+	</url>
+	<url>
+		<loc>http://www.languageoflanguages.com/publications/index.html</loc>
 	</url>
 </urlset>

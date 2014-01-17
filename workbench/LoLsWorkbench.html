@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<title>Language of Languages Workbench</title>
+<meta name="description" content="Free Language Workbench">
+<meta name="author" content="Jamie Douglass, Nicholas Chen">
+<meta charset="utf-8">
+<!-- TODO: set base
+<base href="//www.languageoflanguages.com/">
+-->
+
+<link rel="stylesheet" href="LoLsWorkbench.css">
+
+<script src="prototype.js"></script>
+<script src="prototype-fix.js"></script>
+<script src="lib.js"></script>
+<script src="ometa-base.js"></script>
+<script src="parser.js"></script>
+<script src="bs-js-compiler.js"></script>
+<script src="bs-ometa-compiler.js"></script>
+<script src="bs-ometa-optimizer.js"></script>
+<script src="bs-ometa-js-compiler.js"></script>
+<script src="language-elements.js"></script>
+<!-- TODO: remove protocol -->
+<script src="http://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js" ></script>
+<script src="LoLsWorkbenchUI.js"></script>
+<!-- TODO: temporary -->
+<script src="getting-started-project.js"></script>
+
+<body onLoad="setupPage();">
+<div id="wip">
+  <h4>Under Construction</h4>
+  <hr>
+</div>
+<div id="SignInArea">
+  <a id="SignIn" href="SignIn.html">Sign in</a>
+  <div id="LearnMore">
+<!-- TODO: remove protocol -->
+    <a href="http://www.LanguageOfLanguages.com/">learn more</a>
+  </div>
+</div>
+<div id="Banner">
+  <a href="http://www.LanguageOfLanguages.com/">
+    <img id="lols-icon" src="tower-of-babel.png" alt="Tower of Babel">
+    <img id="lols-name" src="LoLsW-logo.png" alt="Language of Languages (LoLs) Workbench">
+  </a>
+</div>
+<!-- TODO: generate language ribbon contents and implement language selection -->  
+<div id="LangRibbon">
+  <scan>
+    <button type="button" title="add/remove language">+Language</button>
+    <button type="button">calculate</button>
+    <button type="button">LET</button>
+    <button type="button">math</button>
+    <button type="button">ometa</button>
+    <button type="button">text</button>
+  </scan>
+</div>
+<hr>
+<div id="ProjectArea">
+	<div class="ProjectTitle">
+	  <scan id="ProjectName">Project Name </scan><i>project</i>
+	  <button type="button" title="open project" onClick="openProject(this)">
+		<img src="open-project.png" alt="Open Project">
+	  </button>
+	  <button type="button" title="save project" onClick="saveProject(this)">
+		<img src="save-project.png" alt="Save Project">
+	  </button>
+	  <button type="button" title="refresh all" onClick="refreshAll(this)">
+		<img src="refresh.png" alt="Refresh All">
+	  </button>
+	</div>
+</div>
+
+<div id="acknowledgement">
+<!-- TODO: remove protocol -->
+  <p>Brought to you by <a href="http://www.ResearchOnKnowing.com/">
+	<img src="ROK.png" alt="Research On Knowing, LLC"></a>
+</div>
