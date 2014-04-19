@@ -43,9 +43,9 @@ function loadGettingStarted() {
 	'Each area displays the project according to a selected language.\n' +
 	'Changes in one area update all other areas and the Language Element\n' +
 	'Tree (LET) which defines the LoLs project.',"100px");
-  startView=createView('Math Problem',false,false,'2+3*4',"20px");  
-  createView('Answer',false,true,'',"20px");  
-  createView('LET Explorer',false,true,'',"100px");	 
+  startView=createView('Math Problem',false,false,'2+3*4',"60px");  
+  createView('Answer',false,true,'',"60px");  
+  createView('LET Explorer',false,true,'',"200px");	 
   createView('Grammar',true,false,
 	'ometa math {\n' +
 	'  expression = term:t space* end           -> t,\n' +
