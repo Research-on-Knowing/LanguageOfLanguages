@@ -1,76 +1,125 @@
-var LoLs={					
-/* reserved for saving to file, GitHub, etc.
-	guid: GUID,
-  url: URL,  				// workspace file
-*/
-  name: "",  				// workspace name
-  changed: false,		// true => needs to be saved
-	languages:[],
-	currentLanguage: undefined,
-	views: [],				// by name
-	currentView: undefined,
-	viewOrder: []};
-// TODO: load meta language such as ometa or CAT from general workspace
-LoLs.languages["ometa"]={
-/* reserved for saving to file, GitHub, etc.
-	guid: GUID,
-  url: URL,					// language file with pointers to grammar sources
-*/
-	name: "ometa",
-	code:[
-   {
-/* reserved for saving to file, GitHub, etc.
-	  guid: GUID,
-    url: URL,				// javascript executable file
-*/
-    name: "BSOMetaJSParser",
-    rules: BSOMetaJSParser,
-    startRule: "topLevel",
-    language: undefined,
-    inputIsList: true},
-   {
-/* reserved for saving to file, GitHub, etc.
-	  guid: GUID,
-    url: URL,				// javascript executable file
-*/
-    name: "BSOMetaJSTranslator",
-    rules: BSOMetaJSTranslator,
-    startRule: "trans",
-    language: undefined,
-    inputIsList: false,
-    evalResults: true}],
-  decode:[],
-  references:[]};		// Set of Views using language
-LoLs.languages["ometa"].code[0].language=LoLs.languages["ometa"];
-LoLs.languages["ometa"].code[1].language=LoLs.languages["ometa"];
+var LoLs;
 
-function createLanguage(name, startRule, inputIsList, inputView) {
-  var view;
-  LoLs.languages[name]={
-/* reserved for saving to file, GitHub, etc.
-		guid: GUID,
-  	url: URL,				// javascript executable file
-*/
-    name: name,
-    code:[
-      {
-/* reserved for saving to file, GitHub, etc.
-	guid: GUID,
-  url: URL,
-*/
-       name: name,
-       rules: eval(name),
-       startRule: startRule,
-       language: undefined,
-       inputIsList: inputIsList,
-       inputView: LoLs.views[inputView]}],
-    decode:[],
-    references:[]};		// Set of Views using language
-  LoLs.languages[name].code[0].language=LoLs.languages[name];
-  view=LoLs.languages[name].code[0].inputView;
-  if (view)
-    view.langDefs[view.langDefs.length]=LoLs.languages[name];
-}
+var EmptyWorkspace={name: "My Work",	
+ languages: [
+		{name: "ometa",
+		 meta: true,
+		 code: [
+			 {name: "BSOMetaJSParser",
+				startRule: "topLevel"},
+			 {name: "BSOMetaJSTranslator",
+				startRule: "trans",
+				makeList: true}]}], 
+ views: [
+		{name: "My View",	
+		 editor: {name: "ACE", height: "300px", gutters: true, readOnly: false},   				 
+		 language: "ometa",
+		 contents: 	'ometa MyLanguage {\n  start=anything*\n}'}],
+ currentView: "My View"};			
+		
+var GettingStarted={name: "Getting Started",
+ languages: [
+	{name: "ometa",
+	 meta: true,
+	 code: [
+		{name: "BSOMetaJSParser",
+		 startRule: "topLevel"},
+		{name: "BSOMetaJSTranslator",
+		 startRule: "trans",
+		 makeList: true}]},
+	{name: "math",
+	 code: [
+		{name: "math",
+		 startRule: "expression",
+		 defView: "Grammar"}]},
+	{name: "calculate",
+	 code: [
+		{name: "calculate",
+		 startRule: "le",
+		 makeList: true,
+		 defView: "Grammar"}]},
+	{name: "LET",
+	 code: [
+		{name: "LET",
+		 startRule: "let",
+		 makeList: true,
+		 defView: "Grammar"}]},
+	{name: "raw",
+	 code: [
+		{name: "raw",
+		 startRule: "it",
+		 defView: "Grammar"}]}],
+ views: [
+	{name: "Read Me First",
+	 editor:
+	 	{name: "ACE", height: "100px", readOnly: true},
+	 language: "raw",
+	 contents: "Welcome to the Language Workbench for Language of Languages (LoLs).\n"+
+	 "Select a workspace and interact with it using the language areas below.\n"+
+	 "Each area displays the workspace according to a selected language.\n"+
+	 "Changes in one area update all other areas and the Language Element\n"+
+	 "Tree (LET) which defines the LoLs workspace."},
+	{name: "Math Problem",
+	 editor:
+	 	{name: "ACE"},
+	 language: "math",
+	 contents: "2+3*4"},
+	{name: "Answer",
+	 editor:
+	 	{name: "ACE", readOnly: true},
+	 language: "calculate",
+	 contents: "14",
+	 inputView: "Math Problem"},
+	{name: "LET Explorer",
+	 editor:
+	 	{name: "ACE", height: "200px", readOnly: true},
+	 language: "LET",
+	 contents: ".+. Add\n  2 Number\n  .*. Multiply\n    3 Number\n    4 Number\n",
+	 inputView: "Math Problem"},
+	{name: "Grammar",
+	 editor:
+	 	{name: "ACE", height: "250px", gutters: true},
+	 language: "ometa",
+	 contents: "ometa math {\n"+
+	 "  expression = term:t space* end           -> t,\n"+
+	 "  term       = term:t \"+\" factor:f         -> Le(\'Add\', t, f)\n"+
+	 "             | term:t \"-\" factor:f         -> Le(\'Subtract\', t, f)\n"+
+	 "             | factor,\n"+
+	 "  factor     = factor:f \"*\" primary:p      -> Le(\'Multiply\', f, p)\n"+
+	 "             | factor:f \"/\" primary:p      -> Le(\'Divide\', f, p)\n"+
+	 "             | primary,\n"+
+	 "  primary    = Group\n"+
+	 "             | Number,\n"+
+	 "  Group      = \"(\" term:t \")\"              -> Le(\'Group\', t),\n"+
+	 "  Number     = space* digits:n             -> Le(\'Number\', n),\n"+
+	 "  digits     = digits:n digit:d            -> (n * 10 + d)\n"+
+	 "             | digit,\n"+
+	 "  digit      = ^digit:d                    -> d.digitValue()\n"+
+	 "}\n\n"+
+	 "ometa calculate {\n"+
+	 "  le     = [\'Number\' anything:n]  -> n\n"+
+	 "         | [\'Group\' le:x]         -> x\n"+
+	 "         | [\'Add\' le:l le:r]      -> (l + r)\n"+
+	 "         | [\'Subtract\' le:l le:r] -> (l - r)\n"+
+	 "         | [\'Multiply\' le:l le:r] -> (l * r)\n"+
+	 "         | [\'Divide\' le:l le:r]   -> (l / r)\n"+
+	 "}\n\n"+
+	 "ometa LET {\n"+
+	 "  let = [\'Number\' anything:n]:x    -> (sp(x)+n+\' Number\\n\')\n"+
+	 "      | [\'Group\' let:e]:x          -> (sp(x)+\'(.) Group\\n\'+e)\n"+
+	 "      | [\'Add\' let:l let:r]:x      -> (sp(x)+\'.+. Add\\n\'+l+r)\n"+
+	 "      | [\'Subtract\' let:l let:r]:x -> (sp(x)+\'.-. Subtract\\n\'+l+r)\n"+
+	 "      | [\'Multiply\' let:l let:r]:x -> (sp(x)+\'.*. Multiply\\n\'+l+r)\n"+
+	 "      | [\'Divide\' let:l let:r]:x   -> (sp(x)+\'./. Divide\\n\'+l+r)\n"+
+	 "}\n\n"+
+	 "function sp(node) {\n  var s=\"\", i=node.depth();\n"+
+	 "  while (i-- > 1) {s=s+\"  \"};\n"+
+	 "  return s;\n"+
+	 "}\n\n"+
+	 "ometa raw {\n"+
+	 "  it = anything*\n"+
+	 "}"}],
+ currentView: "Math Problem"}; 
 
 function Le(concept) {
   var a, args = new Array(arguments.length); 
@@ -110,26 +159,4 @@ Array.prototype.depth = function() {
     d++;
   }
   return d;
-}
-
-function applyLanguage(lang, source) {
-  var rules, result=source;
-  for (var i=0; i < lang.length; i++) {
-// TODO: update when language loaded or regenerated
-    rules=eval(lang[i].name);
-    lang.rules=rules;
-    if (lang[i].inputIsList) {
-      result=rules.matchAll(result, lang[i].startRule, undefined, 
-	       function(m, i) {throw objectThatDelegatesTo(fail, {errorPos: i}) });
-	  } else {
-      result=rules.match(result, lang[i].startRule, undefined, 
-         function(m, i) {
-           alert('' + lang[i].name + ' translation error');
-           throw fail;
-         });
-	  };
-    if (lang[i].evalResults) 
-      eval(result);
-	};
-	return result;
 }
